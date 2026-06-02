@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="阅读文章">
+    <title>文章详情 — April-0715's Blog</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/article.css">
+</head>
+<body>
+
+    <!-- ========== 导航栏 ========== -->
+    <header>
+        <nav class="navbar" id="navbar">
+            <div class="navbar-inner">
+                <a href="index.html" class="nav-logo">April-0715</a>
+                <button class="nav-toggle" id="navToggle" aria-label="展开菜单">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="index.html" class="nav-link">首页</a></li>
+                    <li><a href="index.html#about" class="nav-link">关于我</a></li>
+                    <li><a href="contents.html" class="nav-link active">博客文章</a></li>
+                    <li><a href="index.html#contact" class="nav-link">联系我</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <!-- ========== 文章内容区 ========== -->
+    <main id="articleMain">
+        <div class="loading">加载中...</div>
+    </main>
+
+    <!-- ========== 页脚 ========== -->
+    <footer id="contact" class="footer">
+        <div class="footer-inner">
+            <div class="footer-brand">April-0715</div>
+            <div class="footer-social">
+                <a href="https://github.com/April-0715" title="GitHub" aria-label="GitHub">GitHub</a>
+            </div>
+            <p>&copy; 2025 April-0715's Blog. All rights reserved.</p>
+            <p>部分图片素材取自网络，版权归原作者所有，若涉及侵权可私信本站下架处理。</p>
+        </div>
+    </footer>
+
+    <!-- ========== 回到顶部 ========== -->
+    <button class="back-to-top" id="backToTop" aria-label="回到顶部" title="回到顶部">↑</button>
+
+    <script src="js/articles-data.js"></script>
+    <script src="js/script.js"></script>
+    <script src="js/article.js"></script>
+</body>
+</html>
