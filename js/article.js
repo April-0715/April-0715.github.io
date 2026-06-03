@@ -4,6 +4,9 @@
 
 /* ======== 轻量 Markdown → HTML 渲染 ======== */
 function parseMarkdown(md) {
+    const escapeHTML = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+    // 1. 提取代码块 → 占位符
     const codeBlocks = [];
     let html = md.replace(/```(\w*)\n([\s\S]*?)```/g, (_, lang, code) => {
         const idx = codeBlocks.length;
@@ -11,16 +14,10 @@ function parseMarkdown(md) {
         return `%%CODEBLOCK_${idx}%%`;
     });
 
-    // 转义行内 HTML
-    html = html.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    // 2. 转义行内 HTML
+    html = escapeHTML(html);
 
-    // 代码块插回
-    html = html.replace(/%%CODEBLOCK_(\d+)%%/g, (_, idx) => {
-        const { lang, code } = codeBlocks[+idx];
-        const langLabel = lang ? `<span class="code-lang">${lang}</span>` : '';
-        return `<pre>${langLabel}<code>${code}</code></pre>`;
-    });
-
+    // 3. 块级元素处理（占位符不会被正则匹配）
     // 表格
     html = html.replace(/^\|(.+)\|\s*\n\|[-| :]+\|\s*\n((?:\|.+\|\s*\n?)*)/gm, (_, header, rows) => {
         const thead = '<thead><tr>' + header.split('|').map(c => `<th>${c.trim()}</th>`).join('') + '</tr></thead>';
@@ -50,7 +47,7 @@ function parseMarkdown(md) {
     // 有序列表
     html = html.replace(/^\d+\. (.+)$/gm, '<li>$1</li>');
 
-    // 行内样式
+    // 4. 行内样式
     html = html.replace(/\*\*\*(.+?)\*\*\*/g, '<strong><em>$1</em></strong>');
     html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
     html = html.replace(/\*(.+?)\*/g, '<em>$1</em>');
@@ -60,7 +57,7 @@ function parseMarkdown(md) {
     html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>');
     html = html.replace(/!\[([^\]]*)\]\(([^)]+)\)/g, '<img src="$2" alt="$1">');
 
-    // 段落
+    // 5. 段落包裹
     const lines = html.split('\n');
     const result = [];
     let buf = [];
@@ -68,7 +65,7 @@ function parseMarkdown(md) {
     function flush() {
         const text = buf.join('\n').trim();
         if (text) {
-            if (/^<(h[1-6]|ul|ol|table|pre|blockquote|hr|img|li|thead|tbody|tr|th|td)/.test(text)) {
+            if (/^<(h[1-6]|ul|ol|table|pre|blockquote|hr|img|li|thead|tbody|tr|th|td|%%CODEBLOCK)/.test(text)) {
                 result.push(text);
             } else {
                 result.push(`<p>${text}</p>`);
@@ -80,7 +77,7 @@ function parseMarkdown(md) {
     for (const line of lines) {
         if (line.trim() === '') {
             flush();
-        } else if (/^<(h[1-6]|ul|ol|table|pre|blockquote|hr|img|li|thead|tbody|tr|th|td|ul|ol|\/)/.test(line.trim())) {
+        } else if (/^<(h[1-6]|ul|ol|table|pre|blockquote|hr|img|li|thead|tbody|tr|th|td|ul|ol|\/|%%CODEBLOCK)/.test(line.trim())) {
             flush();
             result.push(line.trim());
         } else {
@@ -89,7 +86,17 @@ function parseMarkdown(md) {
     }
     flush();
 
-    return result.join('\n');
+    html = result.join('\n');
+
+    // 6. 最后恢复代码块（HTML 转义 + 不受正则影响）
+    html = html.replace(/%%CODEBLOCK_(\d+)%%/g, (_, idx) => {
+        const { lang, code } = codeBlocks[+idx];
+        const escaped = escapeHTML(code);
+        const langLabel = lang ? `<span class="code-lang">${lang}</span>` : '';
+        return `<pre>${langLabel}<code>${escaped}</code></pre>`;
+    });
+
+    return html;
 }
 
 /* ======== 加载并渲染文章 ======== */
