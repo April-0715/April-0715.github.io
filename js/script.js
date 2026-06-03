@@ -24,14 +24,10 @@ document.addEventListener('DOMContentLoaded', () => {
         grid.innerHTML = latest.map(a => `
             <article class="work-item reveal">
                 <a href="article.html?slug=${a.slug}">
-                    <div class="work-item-img">
-                        <img src="${a.image}" alt="${a.title}" loading="lazy">
-                        <div class="work-item-overlay">
-                            <span class="work-item-tag">${a.tag}</span>
-                        </div>
-                    </div>
                     <div class="work-item-body">
+                        <span class="work-item-tag">${a.tag}</span>
                         <h4>${a.title}</h4>
+                        <p class="work-item-summary">${a.summary}</p>
                         <span class="work-date">${a.date}</span>
                     </div>
                 </a>

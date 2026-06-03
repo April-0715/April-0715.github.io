@@ -28,11 +28,8 @@
         return `
             <article class="article-card">
                 <a href="article.html?slug=${a.slug}">
-                    <div class="article-card-img">
-                        <img src="${a.image}" alt="${a.title}" loading="lazy">
-                        <span class="card-tag">${a.tag}</span>
-                    </div>
                     <div class="article-card-body">
+                        <span class="card-tag">${a.tag}</span>
                         <h3>${a.title}</h3>
                         <p class="card-summary">${a.summary}</p>
                         <div class="card-meta">

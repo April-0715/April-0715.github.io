@@ -12,7 +12,6 @@ const ARTICLES = [
         tag: 'C++',
         category: '技术杂谈',
         summary: '全面解析 unique_ptr、shared_ptr、weak_ptr 的用法与最佳实践。',
-        image: 'https://picsum.photos/id/1015/400/250',
         file: 'articles/smart-pointers.md'
     }
 ];
