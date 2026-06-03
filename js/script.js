@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!grid || typeof ARTICLES === 'undefined') return;
 
         const latest = [...ARTICLES]
+            .filter(a => a.category !== '其他')
             .sort((a, b) => new Date(b.date) - new Date(a.date))
             .slice(0, 6);
 

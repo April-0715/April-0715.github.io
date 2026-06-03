@@ -24,6 +24,32 @@
     max-width: var(--max-width);
     margin: 0 auto;
     padding: 48px 24px 80px;
+}
+
+/* 分类区块 */
+.category-section {
+    margin-bottom: 48px;
+}
+
+.category-section:last-child {
+    margin-bottom: 0;
+}
+
+.category-title {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--color-text);
+    margin-bottom: 4px;
+}
+
+.category-count {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    margin-bottom: 20px;
+}
+
+.article-card-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
     gap: 28px;
@@ -131,9 +157,13 @@
 
 /* 响应式 */
 @media (max-width: 768px) {
-    .articles-container {
+    .article-card-grid {
         grid-template-columns: 1fr;
         gap: 20px;
+    }
+
+    .category-title {
+        font-size: 1.3rem;
     }
 
     .page-header {
