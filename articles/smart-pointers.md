@@ -75,6 +75,7 @@ void weakExample() {
 
 ## 总结
 
+
 - 默认选 `unique_ptr`，需要共享时才用 `shared_ptr`
 - `weak_ptr` 是打破循环引用的利器
 - 优先使用 `make_unique` 和 `make_shared`（异常安全 + 一次分配）
