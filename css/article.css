@@ -43,7 +43,9 @@
 .article-content h1,
 .article-content h2,
 .article-content h3,
-.article-content h4 {
+.article-content h4,
+.article-content h5,
+.article-content h6 {
     font-family: var(--font-display);
     color: var(--color-text);
     margin-top: 2em;
@@ -59,6 +61,8 @@
 
 .article-content h3 { font-size: 1.25rem; }
 .article-content h4 { font-size: 1.1rem; }
+.article-content h5 { font-size: 1rem; }
+.article-content h6 { font-size: 0.92rem; color: var(--color-text-secondary); }
 
 .article-content p {
     margin-bottom: 1.2em;
@@ -89,12 +93,31 @@
     color: var(--color-primary);
 }
 
+.article-content del {
+    color: var(--color-text-muted);
+    text-decoration: line-through;
+}
+
 .article-content pre {
+    position: relative;
     margin: 1.5em 0;
     padding: 20px 22px;
     border-radius: var(--radius-md);
     background: #1E1E2E;
     overflow-x: auto;
+}
+
+.article-content pre .code-lang {
+    position: absolute;
+    top: 10px;
+    right: 16px;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    color: rgba(205, 214, 244, 0.35);
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    pointer-events: none;
+    user-select: none;
 }
 
 .article-content pre code {
@@ -114,6 +137,15 @@
 .article-content li {
     margin-bottom: 0.4em;
     line-height: 1.7;
+}
+
+.article-content .task-item {
+    list-style: none;
+}
+.article-content .task-item input[type="checkbox"] {
+    margin-right: 8px;
+    accent-color: var(--color-primary);
+    transform: translateY(1px);
 }
 
 .article-content a {
