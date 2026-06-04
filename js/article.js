@@ -19,7 +19,7 @@ function parseMarkdown(md) {
 
     // 3. 块级元素处理（占位符不会被正则匹配）
     // 表格
-    html = html.replace(/^\|(.+)\|\s*\n\|[-| :]+\|\s*\n((?:\|.+\|\s*\n?)*)/gm, (_, header, rows) => {
+    html = html.replace(/^\|(.+)\|[ \t]*\n\|[-| :]+\|[ \t]*\n((?:\|.+\|[ \t]*\n?)*)/gm, (_, header, rows) => {
         const thead = '<thead><tr>' + header.split('|').map(c => `<th>${c.trim()}</th>`).join('') + '</tr></thead>';
         const tbody = '<tbody>' + rows.trim().split('\n').map(row =>
             '<tr>' + row.split('|').filter(c => c.trim()).map(c => `<td>${c.trim()}</td>`).join('') + '</tr>'
@@ -65,7 +65,7 @@ function parseMarkdown(md) {
     function flush() {
         const text = buf.join('\n').trim();
         if (text) {
-            if (/^<(h[1-6]|ul|ol|table|pre|blockquote|hr|img|li|thead|tbody|tr|th|td|%%CODEBLOCK)/.test(text)) {
+            if (/^<(h[1-6]|ul|ol|table|pre|blockquote|hr|img|li|thead|tbody|tr|th|td)|^%%CODEBLOCK/.test(text)) {
                 result.push(text);
             } else {
                 result.push(`<p>${text}</p>`);
@@ -77,7 +77,7 @@ function parseMarkdown(md) {
     for (const line of lines) {
         if (line.trim() === '') {
             flush();
-        } else if (/^<(h[1-6]|ul|ol|table|pre|blockquote|hr|img|li|thead|tbody|tr|th|td|ul|ol|\/|%%CODEBLOCK)/.test(line.trim())) {
+        } else if (/^<(h[1-6]|ul|ol|table|pre|blockquote|hr|img|li|thead|tbody|tr|th|td|ul|ol|\/)|^%%CODEBLOCK/.test(line.trim())) {
             flush();
             result.push(line.trim());
         } else {
