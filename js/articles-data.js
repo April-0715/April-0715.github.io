@@ -6,6 +6,15 @@
 
 const ARTICLES = [
     {
+        slug: 'deepseek-api-params',
+        title: '从一次 API 调用到 Agent Loop：AI 编程 Harness 学习笔记',
+        date: '2026-10-12',
+        tag: 'AI',
+        category: '学习笔记',
+        summary: '从 Python API 调用梳理 SDK、HTTP、流式、密钥安全与上下文缓存，结合 Q&A 纠正误解，理解 Agent Loop、工具权限和提示注入。',
+        file: 'articles/deepseek-api-params.md'
+    },
+    {
         slug: 'smart-pointers',
         title: '深入理解 C++ 智能指针',
         date: '2026-06-04',
